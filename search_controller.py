@@ -20,6 +20,10 @@ class MainWindow():
         self.product_list = [["A01", "電吉他", "Fender", "墨廠 Classic Player Jaguar Special CAR 電吉他"],
                              ["A02", "木吉他", "gibson", "墨廠 Classic Player Jaguar Special CAR 電吉他"]]
         
+        self.cart_attribute = ["Account", "Product_ID", "Amount"]
+        self.cart_list = [["charles", "A01", "2"],
+                          ["shang", "A02", "2"]]
+        
         self.user_list = ["charles", "shang", "wx200010"]
         self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
 
@@ -37,18 +41,20 @@ class MainWindow():
         for item in self.price_list:
             self.ui.price_comboBox.addItem(item)
         
-        self.ui.search_pushButton.clicked.connect(self.search_click)    
-        self.ui.add_pushButton.clicked.connect(self.add_cart)  
+        self.ui.search_pushButton.clicked.connect(self.search_click)      
         
         for item in self.user_list:
             self.ui.user_comboBox.addItem(item) 
             
-        self.ui.list_tableWidget.cellClicked.connect(self.tablewidget_click)
-    
-    def add_cart(self):
-        self.ui.combox_label.currentText()
-        self.ui.label.currentText()
-        sql = f"INSERT INTO CART VALUES('{Customer_account}', '{Product_id}',{Amount})"
+        self.ui.list_tableWidget.cellClicked.connect(self.list_tablewidget_click)
+        
+        self.ui.add_pushButton.clicked.connect(self.add_cart)
+        
+        self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
+        
+        self.ui.delete_pushButton.clicked.connect(self.delete_click)
+        
+        self.ui.order_pushButton.clicked.connect(self.order_click)
 
     def change_brand_combobox(self):
         self.search_class = self.ui.class_comboBox.currentText()
@@ -100,6 +106,7 @@ class MainWindow():
             del self.product_list[i][-2]
         print(self.product_list)
         self.conn.commit()
+        
         self.list_search_result()
             
     def list_search_result(self):
@@ -127,9 +134,29 @@ class MainWindow():
             for j, attribute in enumerate(product):                
                 self.ui.list_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
-    def tablewidget_click(self):
-        row_index = self.ui.list_tableWidget.currentRow()
-        column_index = self.ui.list_tableWidget.currentColumn()
-        self.ui.product_label.setText(self.product_list[row_index][0])
+    def list_tablewidget_click(self):
+        self.row_index = self.ui.list_tableWidget.currentRow()
+        self.column_index = self.ui.list_tableWidget.currentColumn()
+        self.ui.product_label.setText(self.product_list[self.row_index][0])
         
+        self.count = self.product_list[self.row_index][5]
+        for i in range(int(self.count)):
+            self.ui.count_comboBox.addItem(str(i))
+        
+    def add_cart(self):
+        self.useraccount = self.ui.user_comboBox.currentText()
+        self.productID = self.product_list[self.row_index][0]
+        self.count = self.ui.count_comboBox.currentText()
+        
+        sql = f"INSERT INTO CART VALUES('{Customer_account}', '{Product_id}',{Amount})"
+        
+    def cart_tablewidget_click(self):
+        self.row_index = self.ui.list_tableWidget.currentRow()
+        self.column_index = self.ui.list_tableWidget.currentColumn()
+        self.ui.product_label.setText(self.cart_list[self.row_index][1])
+        
+    def delete_click(self):
+        pass
     
+    def order_click(self):
+        pass
