@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiJnxZKs.ui'
+## Form generated from reading UI file 'uiJRmsof.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -96,12 +96,12 @@ class Ui_MainWindow(object):
         self.widget_3.setObjectName(u"widget_3")
         self.horizontalLayout_3 = QHBoxLayout(self.widget_3)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.list_tableWidget = QTableWidget(self.widget_3)
-        self.list_tableWidget.setObjectName(u"list_tableWidget")
-        self.list_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+        self.search_tableWidget = QTableWidget(self.widget_3)
+        self.search_tableWidget.setObjectName(u"search_tableWidget")
+        self.search_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);")
 
-        self.horizontalLayout_3.addWidget(self.list_tableWidget)
+        self.horizontalLayout_3.addWidget(self.search_tableWidget)
 
 
         self.verticalLayout.addWidget(self.widget_3)

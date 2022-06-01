@@ -46,7 +46,7 @@ class MainWindow():
         for item in self.user_list:
             self.ui.user_comboBox.addItem(item) 
             
-        self.ui.list_tableWidget.cellClicked.connect(self.list_tablewidget_click)
+        self.ui.search_tableWidget.cellClicked.connect(self.search_tableWidget_click)
         
         self.ui.add_pushButton.clicked.connect(self.add_cart)
         
@@ -110,33 +110,33 @@ class MainWindow():
         self.list_search_result()
             
     def list_search_result(self):
-        self.ui.list_tableWidget.setRowCount(len(self.product_list))
-        self.ui.list_tableWidget.setColumnCount(len(self.product_attribute))
+        self.ui.search_tableWidget.setRowCount(len(self.product_list))
+        self.ui.search_tableWidget.setColumnCount(len(self.product_attribute))
         
-        self.ui.list_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
-        self.ui.list_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
-        self.ui.list_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        self.ui.search_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
+        self.ui.search_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        self.ui.search_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
                 
         
-        self.ui.list_tableWidget.setHorizontalHeaderLabels(self.product_attribute)
-        self.ui.list_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        self.ui.search_tableWidget.setHorizontalHeaderLabels(self.product_attribute)
+        self.ui.search_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
         
         
-        for index in range(self.ui.list_tableWidget.columnCount()):
-            headitem=self.ui.list_tableWidget.horizontalHeaderItem(index)
-            # headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
-        for index in range(self.ui.list_tableWidget.rowCount()):
-            headitem=self.ui.list_tableWidget.verticalHeaderItem(index)
-            # headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
+        for index in range(self.ui.search_tableWidget.columnCount()):
+            headitem=self.ui.search_tableWidget.horizontalHeaderItem(index)
+            headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
+        for index in range(self.ui.search_tableWidget.rowCount()):
+            headitem=self.ui.search_tableWidget.verticalHeaderItem(index)
+            headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
             
         
         for i, product in enumerate(self.product_list):
             for j, attribute in enumerate(product):                
-                self.ui.list_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
+                self.ui.search_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
-    def list_tablewidget_click(self):
-        self.row_index = self.ui.list_tableWidget.currentRow()
-        self.column_index = self.ui.list_tableWidget.currentColumn()
+    def search_tableWidget_click(self):
+        self.row_index = self.ui.search_tableWidget.currentRow()
+        self.column_index = self.ui.search_tableWidget.currentColumn()
         self.ui.product_label.setText(self.product_list[self.row_index][0])
         
         self.count = self.product_list[self.row_index][5]
@@ -149,10 +149,32 @@ class MainWindow():
         self.count = self.ui.count_comboBox.currentText()
         
         sql = f"INSERT INTO CART VALUES('{Customer_account}', '{Product_id}',{Amount})"
+    
+    def list_cart_result(self):
+        self.ui.cart_tableWidget.setRowCount(len(self.cart_list))
+        self.ui.cart_tableWidget.setColumnCount(len(self.cart_attribute))
+        
+        self.ui.cart_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
+        self.ui.cart_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        self.ui.cart_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        
+        self.ui.cart_tableWidget.setHorizontalHeaderLabels(self.cart_attribute)
+        self.ui.cart_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        
+        for index in range(self.ui.cart_tableWidget.columnCount()):
+            headitem=self.ui.cart_tableWidget.horizontalHeaderItem(index)
+            headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
+        for index in range(self.ui.search_tableWidget.rowCount()):
+            headitem=self.ui.cart_tableWidget.verticalHeaderItem(index)
+            headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
+            
+        for i, cart in enumerate(self.cart_list):
+            for j, attribute in enumerate(cart):                
+                self.ui.search_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
     def cart_tablewidget_click(self):
-        self.row_index = self.ui.list_tableWidget.currentRow()
-        self.column_index = self.ui.list_tableWidget.currentColumn()
+        self.row_index = self.ui.search_tableWidget.currentRow()
+        self.column_index = self.ui.search_tableWidget.currentColumn()
         self.ui.product_label.setText(self.cart_list[self.row_index][1])
         
     def delete_click(self):

@@ -170,7 +170,7 @@ font: 10pt &quot;Rockwell&quot;; </string>
         <widget class="QWidget" name="widget_3" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QTableWidget" name="list_tableWidget">
+           <widget class="QTableWidget" name="search_tableWidget">
             <property name="styleSheet">
              <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(60, 60, 60);</string>
