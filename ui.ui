@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>768</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QWidget" name="widget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,1">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,5,1,5,1">
        <item>
         <widget class="QWidget" name="widget_2" native="true">
          <widget class="QComboBox" name="brand_comboBox">
@@ -202,7 +202,7 @@ subcontrol-origin:  margin;
 padding: 2 2px 2 2px;</string>
           </property>
           <property name="text">
-           <string>add to Cart</string>
+           <string>Add To Cart</string>
           </property>
          </widget>
          <widget class="QLabel" name="product_label">
@@ -251,6 +251,47 @@ font: 10pt &quot;Rockwell&quot;; </string>
            <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(60, 60, 60);
 font: 10pt &quot;Rockwell&quot;; </string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_5" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QTableWidget" name="cart_tableWidget">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(60, 60, 60);</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_6" native="true">
+         <widget class="QPushButton" name="order_pushButton">
+          <property name="geometry">
+           <rect>
+            <x>815</x>
+            <y>20</y>
+            <width>154</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+ font: 10pt &quot;Rockwell&quot;; 
+background-color: rgb(60, 60, 60); 
+font: bold; 
+border: 1px solid silver; 
+border-radius: 6px;
+subcontrol-origin:  margin; 
+padding: 2 2px 2 2px;</string>
+          </property>
+          <property name="text">
+           <string>Order</string>
           </property>
          </widget>
         </widget>

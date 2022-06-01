@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uixWysWG.ui'
+## Form generated from reading UI file 'uioviztV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1024, 768)
+        MainWindow.resize(1024, 900)
         MainWindow.setStyleSheet(u"background-color: rgb(0, 0, 0);")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -140,9 +140,41 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.widget_4)
 
+        self.widget_5 = QWidget(self.widget)
+        self.widget_5.setObjectName(u"widget_5")
+        self.horizontalLayout_2 = QHBoxLayout(self.widget_5)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.cart_tableWidget = QTableWidget(self.widget_5)
+        self.cart_tableWidget.setObjectName(u"cart_tableWidget")
+        self.cart_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(60, 60, 60);")
+
+        self.horizontalLayout_2.addWidget(self.cart_tableWidget)
+
+
+        self.verticalLayout.addWidget(self.widget_5)
+
+        self.widget_6 = QWidget(self.widget)
+        self.widget_6.setObjectName(u"widget_6")
+        self.order_pushButton = QPushButton(self.widget_6)
+        self.order_pushButton.setObjectName(u"order_pushButton")
+        self.order_pushButton.setGeometry(QRect(815, 20, 154, 30))
+        self.order_pushButton.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+" font: 10pt \"Rockwell\"; \n"
+"background-color: rgb(60, 60, 60); \n"
+"font: bold; \n"
+"border: 1px solid silver; \n"
+"border-radius: 6px;\n"
+"subcontrol-origin:  margin; \n"
+"padding: 2 2px 2 2px;")
+
+        self.verticalLayout.addWidget(self.widget_6)
+
         self.verticalLayout.setStretch(0, 1)
-        self.verticalLayout.setStretch(1, 10)
+        self.verticalLayout.setStretch(1, 5)
         self.verticalLayout.setStretch(2, 1)
+        self.verticalLayout.setStretch(3, 5)
+        self.verticalLayout.setStretch(4, 1)
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -158,7 +190,8 @@ class Ui_MainWindow(object):
         self.search_pushButton.setText(QCoreApplication.translate("MainWindow", u"Search", None))
         self.secondhand_checkBox.setText(QCoreApplication.translate("MainWindow", u"Second Hand", None))
         self.recommend_checkBox.setText(QCoreApplication.translate("MainWindow", u"Recommend", None))
-        self.add_pushButton.setText(QCoreApplication.translate("MainWindow", u"add to Cart", None))
+        self.add_pushButton.setText(QCoreApplication.translate("MainWindow", u"Add To Cart", None))
         self.product_label.setText("")
+        self.order_pushButton.setText(QCoreApplication.translate("MainWindow", u"Order", None))
     # retranslateUi
 
