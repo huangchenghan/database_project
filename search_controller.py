@@ -50,7 +50,7 @@ class MainWindow():
             
         self.ui.search_tableWidget.cellClicked.connect(self.search_tableWidget_click)
         
-        self.ui.add_pushButton.clicked.connect(self.add_cart)
+        self.ui.add_pushButton.clicked.connect(self.add_click)
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
@@ -66,17 +66,6 @@ class MainWindow():
         self.ui.brand_comboBox.clear()
         for item in self.class_brand_dict[self.search_class]:
             self.ui.brand_comboBox.addItem(item)
-    
-    def get_cart(self):
-        account = self.ui.user_comboBox.currentText()
-        sql = f"SELECT * FROM CART WHERE Customer_account = '{account}'"
-        self.cursor.execute(sql)
-        carts = self.cursor.fetchall()
-        self.cart_list = []
-        for i in range(len(carts)):
-            self.cart_list.append(list(carts[i]))
-            for j in range(len(self.cart_list[-1])):
-                self.cart_list[-1][j] = str(self.cart_list[-1][j])
             
 
     def search_click(self):
@@ -161,7 +150,7 @@ class MainWindow():
             self.ui.count_comboBox.addItem(str(i+1))
         
     
-    def add_cart(self):
+    def add_click(self):
         self.useraccount = self.ui.user_comboBox.currentText()
         self.productID = self.product_list[self.row_index][0]
         self.count = self.ui.count_comboBox.currentText()
@@ -170,6 +159,17 @@ class MainWindow():
         self.cursor.execute(sql)
         self.conn.commit()
         self.list_cart_result()
+    
+    def get_cart(self):
+        account = self.ui.user_comboBox.currentText()
+        sql = f"SELECT * FROM CART WHERE Customer_account = '{account}'"
+        self.cursor.execute(sql)
+        carts = self.cursor.fetchall()
+        self.cart_list = []
+        for i in range(len(carts)):
+            self.cart_list.append(list(carts[i]))
+            for j in range(len(self.cart_list[-1])):
+                self.cart_list[-1][j] = str(self.cart_list[-1][j])
     
     def list_cart_result(self):
         self.get_cart()
@@ -197,10 +197,10 @@ class MainWindow():
     def cart_tablewidget_click(self):
         self.row_index = self.ui.cart_tableWidget.currentRow()
         self.column_index = self.ui.cart_tableWidget.currentColumn()
-        self.ui.product_label.setText(self.cart_list[self.row_index][1])
+        self.ui.delete_label.setText(self.cart_list[self.row_index][1])
         
     def delete_click(self):
-        pass
+        self.list_cart_result()
     
     def order_click(self):
-        pass
+        self.list_cart_result()
