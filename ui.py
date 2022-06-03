@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiJRmsof.ui'
+## Form generated from reading UI file 'uiQmdlRy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
         self.widget_6.setObjectName(u"widget_6")
         self.order_pushButton = QPushButton(self.widget_6)
         self.order_pushButton.setObjectName(u"order_pushButton")
-        self.order_pushButton.setGeometry(QRect(735, 20, 234, 30))
+        self.order_pushButton.setGeometry(QRect(760, 20, 200, 30))
         self.order_pushButton.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 " font: 10pt \"Rockwell\"; \n"
 "background-color: rgb(60, 60, 60); \n"
@@ -169,7 +169,7 @@ class Ui_MainWindow(object):
 "padding: 2 2px 2 2px;")
         self.delete_pushButton = QPushButton(self.widget_6)
         self.delete_pushButton.setObjectName(u"delete_pushButton")
-        self.delete_pushButton.setGeometry(QRect(494, 20, 234, 30))
+        self.delete_pushButton.setGeometry(QRect(210, 20, 234, 30))
         self.delete_pushButton.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 " font: 10pt \"Rockwell\"; \n"
 "background-color: rgb(60, 60, 60); \n"
@@ -180,8 +180,14 @@ class Ui_MainWindow(object):
 "padding: 2 2px 2 2px;")
         self.delete_label = QLabel(self.widget_6)
         self.delete_label.setObjectName(u"delete_label")
-        self.delete_label.setGeometry(QRect(252, 20, 235, 30))
+        self.delete_label.setGeometry(QRect(0, 20, 200, 30))
         self.delete_label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(60, 60, 60);\n"
+"font: 10pt \"Rockwell\"; ")
+        self.payment_comboBox = QComboBox(self.widget_6)
+        self.payment_comboBox.setObjectName(u"payment_comboBox")
+        self.payment_comboBox.setGeometry(QRect(550, 20, 200, 30))
+        self.payment_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
 

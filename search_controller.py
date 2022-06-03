@@ -1,5 +1,6 @@
 from errno import ESTALE
 from PySide2 import QtGui, QtCore, QtWidgets
+from PySide2.QtWidgets import  QMessageBox
 from colorama import Cursor
 import mysql.connector
 import datetime
@@ -26,6 +27,8 @@ class MainWindow():
         self.cart_attribute = ["Account", "Product_ID", "Amount"]
         self.cart_list = [["charles", "A01", "2"],
                           ["shang", "A02", "2"]]
+        
+        self.payment_list = ["信用卡", "匯款", "貨到付款"]
         
         # self.user_list = ["charles", "shang", "wx200010"]
         # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
@@ -72,6 +75,9 @@ class MainWindow():
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
         self.ui.delete_pushButton.clicked.connect(self.delete_click)
+        
+        for item in self.payment_list:
+            self.ui.payment_comboBox.addItem(item) 
         
         self.ui.order_pushButton.clicked.connect(self.order_click)
 

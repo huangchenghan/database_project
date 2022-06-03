@@ -274,9 +274,9 @@ background-color: rgb(60, 60, 60);</string>
          <widget class="QPushButton" name="order_pushButton">
           <property name="geometry">
            <rect>
-            <x>735</x>
+            <x>760</x>
             <y>20</y>
-            <width>234</width>
+            <width>200</width>
             <height>30</height>
            </rect>
           </property>
@@ -297,7 +297,7 @@ padding: 2 2px 2 2px;</string>
          <widget class="QPushButton" name="delete_pushButton">
           <property name="geometry">
            <rect>
-            <x>494</x>
+            <x>210</x>
             <y>20</y>
             <width>234</width>
             <height>30</height>
@@ -320,9 +320,9 @@ padding: 2 2px 2 2px;</string>
          <widget class="QLabel" name="delete_label">
           <property name="geometry">
            <rect>
-            <x>252</x>
+            <x>0</x>
             <y>20</y>
-            <width>235</width>
+            <width>200</width>
             <height>30</height>
            </rect>
           </property>
@@ -333,6 +333,21 @@ font: 10pt &quot;Rockwell&quot;; </string>
           </property>
           <property name="text">
            <string/>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="payment_comboBox">
+          <property name="geometry">
+           <rect>
+            <x>550</x>
+            <y>20</y>
+            <width>200</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(60, 60, 60);
+font: 10pt &quot;Rockwell&quot;; </string>
           </property>
          </widget>
         </widget>
