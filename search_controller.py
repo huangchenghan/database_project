@@ -374,6 +374,7 @@ class MainWindow():
         self.list_cart_result()
         self.list_order_result()
         self.search_click()
+        self.search_tableWidget_click()
         self.custom_message()
 
     def custom_message(self):
