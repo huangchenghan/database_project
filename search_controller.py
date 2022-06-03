@@ -36,7 +36,7 @@ class MainWindow():
         self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
 
-
+        self.cart_order = 0
 
         self.cursor = self.conn.cursor()
         self.replenishment()
@@ -71,6 +71,8 @@ class MainWindow():
         self.ui.search_tableWidget.cellClicked.connect(self.search_tableWidget_click)
         
         self.ui.add_pushButton.clicked.connect(self.add_click)
+        
+        self.ui.change_pushButton.clicked.connect(self.change_click)
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
@@ -183,6 +185,14 @@ class MainWindow():
         self.conn.commit()
         self.list_cart_result()
     
+    def change_click(self):
+        if self.cart_order == 0:
+            self.ui.cart_order_label.setText("Order")
+            self.cart_order = 1
+        elif self.cart_order == 1:
+            self.ui.cart_order_label.setText("Cart")
+            self.cart_order = 0
+            
     def get_cart(self):
         self.useraccount = self.ui.user_comboBox.currentText()
         sql = f"SELECT * FROM CART WHERE Customer_account = '{self.useraccount}'"

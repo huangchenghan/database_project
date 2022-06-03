@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiQmdlRy.ui'
+## Form generated from reading UI file 'uigQMvrR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -25,10 +25,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.verticalLayout = QVBoxLayout(self.widget)
-        self.verticalLayout.setObjectName(u"verticalLayout")
         self.widget_2 = QWidget(self.widget)
         self.widget_2.setObjectName(u"widget_2")
+        self.widget_2.setGeometry(QRect(11, 11, 980, 64))
         self.brand_comboBox = QComboBox(self.widget_2)
         self.brand_comboBox.setObjectName(u"brand_comboBox")
         self.brand_comboBox.setGeometry(QRect(172, 20, 154, 30))
@@ -89,11 +88,9 @@ class Ui_MainWindow(object):
         self.class_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
-
-        self.verticalLayout.addWidget(self.widget_2)
-
         self.widget_3 = QWidget(self.widget)
         self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setGeometry(QRect(11, 82, 958, 300))
         self.horizontalLayout_3 = QHBoxLayout(self.widget_3)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.search_tableWidget = QTableWidget(self.widget_3)
@@ -103,11 +100,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.search_tableWidget)
 
-
-        self.verticalLayout.addWidget(self.widget_3)
-
         self.widget_4 = QWidget(self.widget)
         self.widget_4.setObjectName(u"widget_4")
+        self.widget_4.setGeometry(QRect(11, 375, 980, 64))
         self.add_pushButton = QPushButton(self.widget_4)
         self.add_pushButton.setObjectName(u"add_pushButton")
         self.add_pushButton.setGeometry(QRect(735, 20, 234, 30))
@@ -137,11 +132,9 @@ class Ui_MainWindow(object):
         self.user_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
-
-        self.verticalLayout.addWidget(self.widget_4)
-
         self.widget_5 = QWidget(self.widget)
         self.widget_5.setObjectName(u"widget_5")
+        self.widget_5.setGeometry(QRect(11, 520, 958, 300))
         self.horizontalLayout_2 = QHBoxLayout(self.widget_5)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.cart_tableWidget = QTableWidget(self.widget_5)
@@ -151,11 +144,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.cart_tableWidget)
 
-
-        self.verticalLayout.addWidget(self.widget_5)
-
         self.widget_6 = QWidget(self.widget)
         self.widget_6.setObjectName(u"widget_6")
+        self.widget_6.setGeometry(QRect(11, 803, 980, 64))
         self.order_pushButton = QPushButton(self.widget_6)
         self.order_pushButton.setObjectName(u"order_pushButton")
         self.order_pushButton.setGeometry(QRect(760, 20, 200, 30))
@@ -190,14 +181,24 @@ class Ui_MainWindow(object):
         self.payment_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
-
-        self.verticalLayout.addWidget(self.widget_6)
-
-        self.verticalLayout.setStretch(0, 1)
-        self.verticalLayout.setStretch(1, 5)
-        self.verticalLayout.setStretch(2, 1)
-        self.verticalLayout.setStretch(3, 5)
-        self.verticalLayout.setStretch(4, 1)
+        self.cart_order_label = QLabel(self.widget)
+        self.cart_order_label.setObjectName(u"cart_order_label")
+        self.cart_order_label.setGeometry(QRect(20, 480, 200, 30))
+        self.cart_order_label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(60, 60, 60);\n"
+"font: 10pt \"Rockwell\"; ")
+        self.cart_order_label.setAlignment(Qt.AlignCenter)
+        self.change_pushButton = QPushButton(self.widget)
+        self.change_pushButton.setObjectName(u"change_pushButton")
+        self.change_pushButton.setGeometry(QRect(230, 480, 100, 30))
+        self.change_pushButton.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+" font: 10pt \"Rockwell\"; \n"
+"background-color: rgb(60, 60, 60); \n"
+"font: bold; \n"
+"border: 1px solid silver; \n"
+"border-radius: 6px;\n"
+"subcontrol-origin:  margin; \n"
+"padding: 2 2px 2 2px;")
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -218,5 +219,7 @@ class Ui_MainWindow(object):
         self.order_pushButton.setText(QCoreApplication.translate("MainWindow", u"Order", None))
         self.delete_pushButton.setText(QCoreApplication.translate("MainWindow", u"Delete", None))
         self.delete_label.setText("")
+        self.cart_order_label.setText(QCoreApplication.translate("MainWindow", u"Cart", None))
+        self.change_pushButton.setText(QCoreApplication.translate("MainWindow", u"Change", None))
     # retranslateUi
 
