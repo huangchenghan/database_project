@@ -8,6 +8,7 @@ import time
 
 class MainWindow():
     def __init__(self, ui):
+        self.is_birthday=0
         self.ui = ui    
         self.class_list = ["不限", "木吉他", "電吉他", "貝斯", "MIDI鍵盤"]
         self.brand_list = ["不限", "Cort", "Fender", "gibson", "Bacchus", "Novation"]
@@ -85,7 +86,7 @@ class MainWindow():
         
         self.ui.order_pushButton.clicked.connect(self.order_click)
 
-        self.ui.user_comboBox.currentIndexChanged.connect(self.list_cart_result)
+        self.ui.user_comboBox.currentIndexChanged.connect(self.list_result)
 
     def change_brand_combobox(self):
         self.search_class = self.ui.class_comboBox.currentText()
@@ -137,8 +138,24 @@ class MainWindow():
             del self.product_list[i][-2]
             del self.product_list[i][-2]
         #print(self.product_list)
-        print(self.useraccount)
+        #print(self.useraccount)
         self.conn.commit()
+        loc_dt = datetime.datetime.today() 
+        loc_dt_format = loc_dt.strftime("%Y/%m/%d %H:%M:%S")
+        loc_dt_format=loc_dt_format.split("/")
+        select_birthday_sql_command=f"select Birthday from CUSTOMER WHERE Customer_account='{self.useraccount}'"
+        self.cursor.execute(select_birthday_sql_command)
+        birthday_list=[]
+        records=self.cursor.fetchall()
+        for r in records:
+            birthday_list.append(list(r))
+        birthday=str(birthday_list[0])
+        birthday=birthday.split(",")
+        if int(birthday[1])==int(loc_dt_format[1]):
+            self.is_birthday=1
+        #print(self.product_list)
+            for i in range(len(self.product_list)):
+                self.product_list[i][4]=str(round(int(self.product_list[i][4])*0.9))
         
         self.list_search_result()
             
@@ -186,7 +203,7 @@ class MainWindow():
         sql = f"INSERT INTO CART VALUES('{self.useraccount}', '{self.productID}',{self.count})"
         self.cursor.execute(sql)
         self.conn.commit()
-        self.list_cart_result()
+        self.list_result()
             
     def get_cart(self):
         self.useraccount = self.ui.user_comboBox.currentText()
@@ -208,9 +225,34 @@ class MainWindow():
             self.order_list.append(list(carts[i]))
             for j in range(len(self.order_list[-1])):
                 self.order_list[-1][j] = str(self.order_list[-1][j])
-    
+
     def list_cart_result(self):
         self.get_cart()
+        self.ui.cart_tableWidget.setRowCount(len(self.cart_list))
+        self.ui.cart_tableWidget.setColumnCount(len(self.cart_attribute))
+        
+        self.ui.cart_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
+        self.ui.cart_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        self.ui.cart_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        
+        self.ui.cart_tableWidget.setHorizontalHeaderLabels(self.cart_attribute)
+        self.ui.cart_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        
+        for index in range(self.ui.cart_tableWidget.columnCount()):
+            headitem=self.ui.cart_tableWidget.horizontalHeaderItem(index)
+          #  headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
+        for index in range(self.ui.cart_tableWidget.rowCount()):
+            headitem=self.ui.cart_tableWidget.verticalHeaderItem(index)
+           # headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
+            
+        for i, cart in enumerate(self.cart_list):
+            for j, attribute in enumerate(cart):                
+                self.ui.cart_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))   
+    def list_result(self):
+        print(self.useraccount)
+        self.list_cart_result()
+        self.list_order_result()
+        self.search_click()
         self.ui.cart_tableWidget.setRowCount(len(self.cart_list))
         self.ui.cart_tableWidget.setColumnCount(len(self.cart_attribute))
         
@@ -268,7 +310,7 @@ class MainWindow():
         delete_cart_sql_command=f"delete from cart where Customer_account='{self.useraccount}' and Product_id='{self.cart_list[self.row_index_cart][1]}'"
         self.cursor.execute(delete_cart_sql_command)
         self.conn.commit()
-        self.list_cart_result()
+        self.list_result()
     # del delete_click_order(self):
 
 
@@ -343,7 +385,7 @@ class MainWindow():
         delete_command = f"DELETE FROM CART WHERE Customer_account = '{self.useraccount}';"
         self.cursor.execute(delete_command)
         self.conn.commit()
-        self.list_cart_result()
+        self.list_result()
         self.search_click()
         self.custom_message()
         self.list_order_result()
@@ -354,7 +396,7 @@ class MainWindow():
         # msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle('Order Information')
         select_order_info_sql_command=f"select established_date,State,PaymentMethod from ORDER_INFO where OrderNo='{self.OrderNo}';"
-        print(select_order_info_sql_command)
+        #print(select_order_info_sql_command)
         self.cursor.execute(select_order_info_sql_command)
         order_list=[]
         records=self.cursor.fetchall()
@@ -374,11 +416,15 @@ class MainWindow():
         total_money=0
         for i in range(len(order_product_list)):
             total_money+=(order_product_list[i][2]*order_product_list[i][3])
+        postfix_happybirthday_string=""
+        if(self.is_birthday==1):
+            total_money=round(total_money*0.9)
+            postfix_happybirthday_string="Happy Birthday!You have a 10% off discount!\n"
 
         if(len(order_product_list)==1):
-            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n\n\n總金額:{total_money}\n')
+            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n\n\n{postfix_happybirthday_string}總金額:{total_money}\n')
         else:
-            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n{order_product_list[1][0]},{order_product_list[1][1]},{order_product_list[1][2]},{order_product_list[1][3]}\n\n\n總金額:{total_money}\n')
+            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n{order_product_list[1][0]},{order_product_list[1][1]},{order_product_list[1][2]},{order_product_list[1][3]}\n\n\n{postfix_happybirthday_string}總金額:{total_money}\n')
          
 
             
