@@ -141,8 +141,13 @@ class Ui_MainWindow(object):
         self.cart_tableWidget.setObjectName(u"cart_tableWidget")
         self.cart_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);")
+        self.order_tableWidget = QTableWidget(self.widget_5)
+        self.order_tableWidget.setObjectName(u"order_tableWidget")
+        self.order_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(60, 60, 60);")
 
         self.horizontalLayout_2.addWidget(self.cart_tableWidget)
+        self.horizontalLayout_2.addWidget(self.order_tableWidget)
 
         self.widget_6 = QWidget(self.widget)
         self.widget_6.setObjectName(u"widget_6")

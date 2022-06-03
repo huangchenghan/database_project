@@ -25,6 +25,7 @@ class MainWindow():
                              ["A02", "木吉他", "gibson", "墨廠 Classic Player Jaguar Special CAR 電吉他"]]
         
         self.cart_attribute = ["Account", "Product_ID", "Amount"]
+        self.order_attribute = ["訂單編號", "商品編號","商品類別","商品品牌","商品名稱","單價","購買數量", "送貨地址","訂單成立時間","發貨狀態","付款方式","是否付款","附註"]
         self.cart_list = [["charles", "A01", "2"],
                           ["shang", "A02", "2"]]
         
@@ -76,6 +77,8 @@ class MainWindow():
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
+        self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
+
         self.ui.delete_pushButton.clicked.connect(self.delete_click)
         
         for item in self.payment_list:
@@ -189,9 +192,11 @@ class MainWindow():
         if self.cart_order == 0:
             self.ui.cart_order_label.setText("Order")
             self.cart_order = 1
+            self.list_order_result()
         elif self.cart_order == 1:
             self.ui.cart_order_label.setText("Cart")
             self.cart_order = 0
+            self.list_cart_result()
             
     def get_cart(self):
         self.useraccount = self.ui.user_comboBox.currentText()
@@ -203,6 +208,16 @@ class MainWindow():
             self.cart_list.append(list(carts[i]))
             for j in range(len(self.cart_list[-1])):
                 self.cart_list[-1][j] = str(self.cart_list[-1][j])
+    def get_order(self):
+        self.useraccount = self.ui.user_comboBox.currentText()
+        sql = f"SELECT OO.OrderNo,P.Product_ID,P.Class,P.Brand,P.Product_name,P.Price,OO.Amount,OI.Address,OI.Established_date,OI.State,OI.PaymentMethod,OI.IsPaid,OO.Note FROM ORDER_INFO AS OI,ORDER_OUTLINE AS OO,PRODUCT AS P WHERE OO.Product_id=P.Product_ID and OO.OrderNo=OI.OrderNo and OI.Customer_account='{self.useraccount}';"
+        self.cursor.execute(sql)
+        carts = self.cursor.fetchall()
+        self.order_list = []
+        for i in range(len(carts)):
+            self.order_list.append(list(carts[i]))
+            for j in range(len(self.order_list[-1])):
+                self.order_list[-1][j] = str(self.order_list[-1][j])
     
     def list_cart_result(self):
         self.get_cart()
@@ -226,17 +241,47 @@ class MainWindow():
         for i, cart in enumerate(self.cart_list):
             for j, attribute in enumerate(cart):                
                 self.ui.cart_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
+    def list_order_result(self):
+        self.get_order()
+        self.ui.order_tableWidget.setRowCount(len(self.order_list))
+        self.ui.order_tableWidget.setColumnCount(len(self.order_attribute))
+        
+        self.ui.order_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
+        self.ui.order_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        self.ui.order_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
+        
+        self.ui.order_tableWidget.setHorizontalHeaderLabels(self.order_attribute)
+        self.ui.order_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        
+        for index in range(self.ui.order_tableWidget.columnCount()):
+            headitem=self.ui.order_tableWidget.horizontalHeaderItem(index)
+          #  headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
+        for index in range(self.ui.order_tableWidget.rowCount()):
+            headitem=self.ui.order_tableWidget.verticalHeaderItem(index)
+           # headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
+            
+        for i, cart in enumerate(self.order_list):
+            for j, attribute in enumerate(cart):                
+                self.ui.order_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
     def cart_tablewidget_click(self):
         self.row_index_cart = self.ui.cart_tableWidget.currentRow()
         self.column_index_cart = self.ui.cart_tableWidget.currentColumn()
         self.ui.delete_label.setText(self.cart_list[self.row_index_cart][1])
+    def order_tablewidget_click(self):
+        self.row_index_order = self.ui.order_tableWidget.currentRow()
+        self.column_index_order = self.ui.order_tableWidget.currentColumn()
+        self.ui.delete_label.setText(self.order_list[self.row_index_order][0])    
+
         
     def delete_click(self):
         delete_cart_sql_command=f"delete from cart where Customer_account='{self.useraccount}' and Product_id='{self.cart_list[self.row_index_cart][1]}'"
         self.cursor.execute(delete_cart_sql_command)
         self.conn.commit()
         self.list_cart_result()
+    # del delete_click_order(self):
+
+
         
     
     def order_click(self):
