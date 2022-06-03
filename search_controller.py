@@ -45,6 +45,7 @@ class MainWindow():
         self.replenishment()
         self.connect_ui()
         self.list_cart_result()
+        self.list_order_result()
 
     def replenishment(self):
         replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A01'"
@@ -77,7 +78,7 @@ class MainWindow():
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
-        # self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
+        #self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
 
         self.ui.delete_pushButton.clicked.connect(self.delete_click)
         
@@ -135,9 +136,9 @@ class MainWindow():
             self.product_list.append(list(products[i]))
             for j in range(len(self.product_list[i])):
                 self.product_list[i][j] = str(self.product_list[i][j])
-            del self.product_list[i][-2]
-            del self.product_list[i][-2]
+            del self.product_list[i][7:9]
         #print(self.product_list)
+        print(self.useraccount)
         self.conn.commit()
         
         self.list_search_result()
@@ -173,10 +174,12 @@ class MainWindow():
         self.row_index_product = self.ui.search_tableWidget.currentRow()
         self.column_index_product = self.ui.search_tableWidget.currentColumn()
         self.ui.product_label.setText(self.product_list[self.row_index_product][0])
+        Isplay = True
         if(self.column_index_product == 8):
             pygame.mixer.init()
-            pygame.mixer.music.load('Cort_L100F.mp3')
-            pygame.mixer.music.play()
+            if(self.product_list[self.row_index_product][8] != ""):
+                pygame.mixer.music.load(self.product_list[self.row_index_product][8])
+                pygame.mixer.music.play()
 
         
         self.count = self.product_list[self.row_index_product][5]
