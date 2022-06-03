@@ -101,7 +101,7 @@ class MainWindow():
     def search_click(self):
         self.search_brand = self.ui.brand_comboBox.currentText() 
         self.search_price = self.ui.price_comboBox.currentText()
-        
+        # print(self.useraccount)
         if self.ui.secondhand_checkBox.isChecked():
             self.IsSecond_hand = True
         #    print("aa")
@@ -152,11 +152,15 @@ class MainWindow():
             birthday_list.append(list(r))
         birthday=str(birthday_list[0])
         birthday=birthday.split(",")
+        print(self.useraccount)
         if int(birthday[1])==int(loc_dt_format[1]):
             self.is_birthday=1
-        #print(self.product_list)
             for i in range(len(self.product_list)):
                 self.product_list[i][4]=str(round(int(self.product_list[i][4])*0.9))
+        else:
+            self.is_birthday=0
+        #print(self.product_list)
+
         
         self.list_search_result()
         
@@ -213,7 +217,7 @@ class MainWindow():
         sql = f"INSERT INTO CART VALUES('{self.useraccount}', '{self.productID}',{self.count})"
         self.cursor.execute(sql)
         self.conn.commit()
-        self.list_result()
+        self.list_cart_result()
             
     def get_cart(self):
         self.useraccount = self.ui.user_comboBox.currentText()
@@ -259,30 +263,10 @@ class MainWindow():
             for j, attribute in enumerate(cart):                
                 self.ui.cart_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))   
     def list_result(self):
-        print(self.useraccount)
+        self.useraccount=self.ui.user_comboBox.currentText()
+        self.search_click()
         self.list_cart_result()
         self.list_order_result()
-        self.search_click()
-        self.ui.cart_tableWidget.setRowCount(len(self.cart_list))
-        self.ui.cart_tableWidget.setColumnCount(len(self.cart_attribute))
-        
-        self.ui.cart_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
-        self.ui.cart_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
-        self.ui.cart_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
-        
-        self.ui.cart_tableWidget.setHorizontalHeaderLabels(self.cart_attribute)
-        self.ui.cart_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
-        
-        for index in range(self.ui.cart_tableWidget.columnCount()):
-            headitem=self.ui.cart_tableWidget.horizontalHeaderItem(index)
-          #  headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))            
-        for index in range(self.ui.cart_tableWidget.rowCount()):
-            headitem=self.ui.cart_tableWidget.verticalHeaderItem(index)
-           # headitem.setFont(QtGui.QFont("Microsoft JhengHei",10,QtGui.QFont.Bold))
-            
-        for i, cart in enumerate(self.cart_list):
-            for j, attribute in enumerate(cart):                
-                self.ui.cart_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
     def list_order_result(self):
         self.get_order()
         self.ui.order_tableWidget.setRowCount(len(self.order_list))
@@ -395,7 +379,7 @@ class MainWindow():
         delete_command = f"DELETE FROM CART WHERE Customer_account = '{self.useraccount}';"
         self.cursor.execute(delete_command)
         self.conn.commit()
-        self.list_result()
+        self.list_cart_result()
         self.search_click()
         self.custom_message()
         self.list_order_result()
