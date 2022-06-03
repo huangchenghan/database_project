@@ -43,6 +43,7 @@ class MainWindow():
         self.replenishment()
         self.connect_ui()
         self.list_cart_result()
+        self.list_order_result()
 
     def replenishment(self):
         replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A01'"
@@ -75,7 +76,7 @@ class MainWindow():
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
-        self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
+        #self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
 
         self.ui.delete_pushButton.clicked.connect(self.delete_click)
         
@@ -136,6 +137,7 @@ class MainWindow():
             del self.product_list[i][-2]
             del self.product_list[i][-2]
         #print(self.product_list)
+        print(self.useraccount)
         self.conn.commit()
         
         self.list_search_result()
@@ -344,6 +346,7 @@ class MainWindow():
         self.list_cart_result()
         self.search_click()
         self.custom_message()
+        self.list_order_result()
     def custom_message(self):
         msg_box = QMessageBox(self)
         # msg_box.setIcon(QMessageBox.Question)
