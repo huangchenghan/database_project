@@ -2,6 +2,8 @@ from errno import ESTALE
 from PySide2 import QtGui, QtCore, QtWidgets
 from colorama import Cursor
 import mysql.connector
+import datetime
+import time
 
 class MainWindow():
     def __init__(self, ui):
@@ -25,13 +27,28 @@ class MainWindow():
         self.cart_list = [["charles", "A01", "2"],
                           ["shang", "A02", "2"]]
         
-        self.user_list = ["charles", "shang", "wx200010"]
-        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        # self.user_list = ["charles", "shang", "wx200010"]
+        # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        self.user_list = ["F74084737","F74086250"]
+        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+
+
+
 
         self.cursor = self.conn.cursor()
+        self.replenishment()
         self.connect_ui()
         self.list_cart_result()
-        
+
+    def replenishment(self):
+        replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A01'"
+        self.cursor.execute(replenishment_sql_command)
+        self.conn.commit()
+        replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A02'"
+        self.cursor.execute(replenishment_sql_command)
+        self.conn.commit()
+
+
     def connect_ui(self):
         for item in self.class_list:
             self.ui.class_comboBox.addItem(item)
@@ -140,11 +157,11 @@ class MainWindow():
                 self.ui.search_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
     def search_tableWidget_click(self):
-        self.row_index = self.ui.search_tableWidget.currentRow()
-        self.column_index = self.ui.search_tableWidget.currentColumn()
-        self.ui.product_label.setText(self.product_list[self.row_index][0])
+        self.row_index_product = self.ui.search_tableWidget.currentRow()
+        self.column_index_product = self.ui.search_tableWidget.currentColumn()
+        self.ui.product_label.setText(self.product_list[self.row_index_product][0])
         
-        self.count = self.product_list[self.row_index][5]
+        self.count = self.product_list[self.row_index_product][5]
         self.ui.count_comboBox.clear()
         for i in range(int(self.count)):
             self.ui.count_comboBox.addItem(str(i+1))
@@ -152,7 +169,7 @@ class MainWindow():
     
     def add_click(self):
         self.useraccount = self.ui.user_comboBox.currentText()
-        self.productID = self.product_list[self.row_index][0]
+        self.productID = self.product_list[self.row_index_product][0]
         self.count = self.ui.count_comboBox.currentText()
 
         sql = f"INSERT INTO CART VALUES('{self.useraccount}', '{self.productID}',{self.count})"
@@ -161,8 +178,8 @@ class MainWindow():
         self.list_cart_result()
     
     def get_cart(self):
-        account = self.ui.user_comboBox.currentText()
-        sql = f"SELECT * FROM CART WHERE Customer_account = '{account}'"
+        self.useraccount = self.ui.user_comboBox.currentText()
+        sql = f"SELECT * FROM CART WHERE Customer_account = '{self.useraccount}'"
         self.cursor.execute(sql)
         carts = self.cursor.fetchall()
         self.cart_list = []
@@ -195,12 +212,85 @@ class MainWindow():
                 self.ui.cart_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
         
     def cart_tablewidget_click(self):
-        self.row_index = self.ui.cart_tableWidget.currentRow()
-        self.column_index = self.ui.cart_tableWidget.currentColumn()
-        self.ui.delete_label.setText(self.cart_list[self.row_index][1])
+        self.row_index_cart = self.ui.cart_tableWidget.currentRow()
+        self.column_index_cart = self.ui.cart_tableWidget.currentColumn()
+        self.ui.delete_label.setText(self.cart_list[self.row_index_cart][1])
         
     def delete_click(self):
+        delete_cart_sql_command=f"delete from cart where Customer_account='{self.useraccount}' and Product_id='{self.cart_list[self.row_index_cart][1]}'"
+        self.cursor.execute(delete_cart_sql_command)
+        self.conn.commit()
         self.list_cart_result()
+        
     
     def order_click(self):
+        select_from_cart_command=f"select * from cart WHERE Customer_account = '{self.useraccount}';"
+        self.cursor.execute(select_from_cart_command)
+        # 取出該用戶的購物車資料
+        self.cart_convert_into_order_list=[]
+        records=self.cursor.fetchall()
+        for r in records:
+            self.cart_convert_into_order_list.append(list(r))
+        # 檢查購物車中是否有商品數量超過庫存
+        Exceed_Stock = False
+        for i in range(len(self.cart_convert_into_order_list)):
+            Product_id = self.cart_convert_into_order_list[i][1]
+            Amount = self.cart_convert_into_order_list[i][2]
+            select_command=f"SELECT STOCK FROM PRODUCT WHERE Product_id = '{Product_id}' "
+            self.cursor.execute(select_command)
+            records=self.cursor.fetchall()
+            STOCK=int(list(records[0])[0])
+            # 若有任一商品超過庫存，則報錯，拒絕訂單成立
+            if(Amount > STOCK):
+                Exceed_Stock = True
+                print(f"編號{Product_id}的商品已超過庫存{STOCK}")
+                break
+        # 若商品數量皆不超過庫存，則代表該訂單可以成立：
+        if(Exceed_Stock == False):
+
+            Serial_no=0
+            # 開始插入 Order_info 
+            loc_dt = datetime.datetime.today() 
+            loc_dt_format = loc_dt.strftime("%Y/%m/%d %H:%M:%S")
+            OrderNo=self.useraccount+"_"+loc_dt_format
+            Serial_no+=1
+            self.cursor.execute(f"select Address from CUSTOMER WHERE Customer_account = '{self.useraccount}';")
+            records=self.cursor.fetchall()
+            Address=list(records[0])[0]
+
+            Established_date=str(datetime.date.today())
+            completion_date=str(datetime.date.today())
+            State="訂單準備中"
+            PaymentMethod="信用卡"
+            IsPaid="0"
+            insert_command='INSERT INTO '+ 'ORDER_INFO'+' VALUES'+f"('{OrderNo}','{self.useraccount}','{Address}','{Established_date}','{completion_date}','{State}','{PaymentMethod}','{IsPaid}');"
+            self.cursor.execute(insert_command)
+            self.conn.commit()
+
+        # 開始對每件商品插入 ORDER
+        for i in range(len(self.cart_convert_into_order_list)): #Customer_account,Product_id,Amount
+            Product_id = self.cart_convert_into_order_list[i][1]
+            Amount = self.cart_convert_into_order_list[i][2]
+            Note = "no"
+            insert_command='INSERT INTO '+'ORDER_OUTLINE'+' VALUES '+f"('{OrderNo}','{Product_id}','{Amount}','{Note}');"
+            self.cursor.execute(insert_command)
+            self.conn.commit()
+            # 開始更新商品庫存
+
+            # 取得目前商品的STOCK
+            select_command=f"SELECT STOCK FROM PRODUCT WHERE Product_id = '{Product_id}' "
+            self.cursor.execute(select_command)
+            records=self.cursor.fetchall()
+            STOCK=int(list(records[0])[0])
+
+            # 減少商品庫存
+            update_command=f"UPDATE PRODUCT SET STOCK = {STOCK-Amount} WHERE Product_ID = '{Product_id}'"
+            self.cursor.execute(update_command)
+            self.conn.commit()
+
+        # 清空該用戶的購物車資料
+        delete_command = f"DELETE FROM CART WHERE Customer_account = '{self.useraccount}';"
+        self.cursor.execute(delete_command)
+        self.conn.commit()
         self.list_cart_result()
+        self.search_click()
