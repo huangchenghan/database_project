@@ -34,10 +34,10 @@ class MainWindow():
         
         self.payment_list = ["信用卡", "匯款", "貨到付款"]
         
-        self.user_list = ["charles", "shang", "wx200010"]
-        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        # self.user_list = ["F74084737","F74086250"]
-        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        # self.user_list = ["charles", "shang", "wx200010"]
+        # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        self.user_list = ["F74084737","F74086250"]
+        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
 
         self.cart_order = 0
@@ -407,11 +407,7 @@ class MainWindow():
         # msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle('Order Information')
         select_order_info_sql_command=f"select established_date,State,PaymentMethod from ORDER_INFO where OrderNo='{self.OrderNo}';"
-<<<<<<< HEAD
         #print(select_order_info_sql_command)
-=======
-        # print(select_order_info_sql_command)
->>>>>>> b01736a34939d81928eae5913e72bb033dabf879
         self.cursor.execute(select_order_info_sql_command)
         order_list=[]
         records=self.cursor.fetchall()
