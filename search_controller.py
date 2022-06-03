@@ -1,10 +1,12 @@
 from errno import ESTALE
+from winsound import PlaySound
 from PySide2 import QtGui, QtCore, QtWidgets
 from PySide2.QtWidgets import  QMessageBox
 from colorama import Cursor
 import mysql.connector
 import datetime
 import time
+import pygame
 
 class MainWindow():
     def __init__(self, ui):
@@ -20,7 +22,7 @@ class MainWindow():
         self.class_brand_dict = {"不限":["不限", "Cort", "Fender", "gibson", "Bacchus", "Novation"], "木吉他":["不限", "Cort"], "電吉他":["不限", "Fender", "gibson"],
                                  "貝斯":["不限", "Bacchus"], "MIDI鍵盤":["不限", "Novation"]}
         
-        self.product_attribute = ["Product_ID", "Class", "Brand", "Name", "Price", "Stock", "Release_date",  "State"]
+        self.product_attribute = ["Product_ID", "Class", "Brand", "Name", "Price", "Stock", "Release_date",  "State","audition"]
         self.product_list = [["A01", "電吉他", "Fender", "墨廠 Classic Player Jaguar Special CAR 電吉他"],
                              ["A02", "木吉他", "gibson", "墨廠 Classic Player Jaguar Special CAR 電吉他"]]
         
@@ -31,10 +33,10 @@ class MainWindow():
         
         self.payment_list = ["信用卡", "匯款", "貨到付款"]
         
-        # self.user_list = ["charles", "shang", "wx200010"]
-        # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        self.user_list = ["F74084737","F74086250"]
-        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        self.user_list = ["charles", "shang", "wx200010"]
+        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        # self.user_list = ["F74084737","F74086250"]
+        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
 
         self.cart_order = 0
@@ -75,7 +77,7 @@ class MainWindow():
         
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
-        self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
+        # self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
 
         self.ui.delete_pushButton.clicked.connect(self.delete_click)
         
@@ -139,6 +141,8 @@ class MainWindow():
         self.conn.commit()
         
         self.list_search_result()
+        
+        
             
     def list_search_result(self):
         self.ui.search_tableWidget.setRowCount(len(self.product_list))
@@ -169,6 +173,11 @@ class MainWindow():
         self.row_index_product = self.ui.search_tableWidget.currentRow()
         self.column_index_product = self.ui.search_tableWidget.currentColumn()
         self.ui.product_label.setText(self.product_list[self.row_index_product][0])
+        if(self.column_index_product == 8):
+            pygame.mixer.init()
+            pygame.mixer.music.load('Cort_L100F.mp3')
+            pygame.mixer.music.play()
+
         
         self.count = self.product_list[self.row_index_product][5]
         self.ui.count_comboBox.clear()
@@ -344,6 +353,8 @@ class MainWindow():
         self.list_cart_result()
         self.search_click()
         self.custom_message()
+        self.list_order_result()
+
     def custom_message(self):
         msg_box = QMessageBox(self)
         # msg_box.setIcon(QMessageBox.Question)
@@ -351,7 +362,7 @@ class MainWindow():
         # msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle('Order Information')
         select_order_info_sql_command=f"select established_date,State,PaymentMethod from ORDER_INFO where OrderNo='{self.OrderNo}';"
-        print(select_order_info_sql_command)
+        # print(select_order_info_sql_command)
         self.cursor.execute(select_order_info_sql_command)
         order_list=[]
         records=self.cursor.fetchall()
