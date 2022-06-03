@@ -258,7 +258,7 @@ class MainWindow():
             # 開始插入 Order_info 
             loc_dt = datetime.datetime.today() 
             loc_dt_format = loc_dt.strftime("%Y/%m/%d %H:%M:%S")
-            OrderNo=self.useraccount+"_"+loc_dt_format
+            self.OrderNo=self.useraccount+"_"+loc_dt_format
             Serial_no+=1
             self.cursor.execute(f"select Address from CUSTOMER WHERE Customer_account = '{self.useraccount}';")
             records=self.cursor.fetchall()
@@ -269,7 +269,7 @@ class MainWindow():
             State="訂單準備中"
             PaymentMethod="信用卡"
             IsPaid="0"
-            insert_command='INSERT INTO '+ 'ORDER_INFO'+' VALUES'+f"('{OrderNo}','{self.useraccount}','{Address}','{Established_date}','{completion_date}','{State}','{PaymentMethod}','{IsPaid}');"
+            insert_command='INSERT INTO '+ 'ORDER_INFO'+' VALUES'+f"('{self.OrderNo}','{self.useraccount}','{Address}','{Established_date}','{completion_date}','{State}','{PaymentMethod}','{IsPaid}');"
             self.cursor.execute(insert_command)
             self.conn.commit()
 
@@ -278,7 +278,7 @@ class MainWindow():
             Product_id = self.cart_convert_into_order_list[i][1]
             Amount = self.cart_convert_into_order_list[i][2]
             Note = "no"
-            insert_command='INSERT INTO '+'ORDER_OUTLINE'+' VALUES '+f"('{OrderNo}','{Product_id}','{Amount}','{Note}');"
+            insert_command='INSERT INTO '+'ORDER_OUTLINE'+' VALUES '+f"('{self.OrderNo}','{Product_id}','{Amount}','{Note}');"
             self.cursor.execute(insert_command)
             self.conn.commit()
             # 開始更新商品庫存
@@ -300,3 +300,47 @@ class MainWindow():
         self.conn.commit()
         self.list_cart_result()
         self.search_click()
+        self.custom_message()
+    def custom_message(self):
+        msg_box = QMessageBox(self)
+        # msg_box.setIcon(QMessageBox.Question)
+        # msg_box.setStandardButtons(QMessageBox.Yes)
+        # msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle('Order Information')
+        select_order_info_sql_command=f"select established_date,State,PaymentMethod from ORDER_INFO where OrderNo='{self.OrderNo}';"
+        print(select_order_info_sql_command)
+        self.cursor.execute(select_order_info_sql_command)
+        order_list=[]
+        records=self.cursor.fetchall()
+        for r in records:
+            order_list.append(list(r))
+        msg_box.setText(f"Order Number:\t\t{self.OrderNo}\nEstablished Date:\t{str(order_list[0][0])}\nState:\t\t\t\t{order_list[0][1]}\nPayment Method:\t{order_list[0][2]}\n")
+
+        
+        select_order_outline_sql_command=f"select OO.Product_id,P.Product_name,P.Price,OO.Amount from PRODUCT AS P,ORDER_OUTLINE AS OO where OO.OrderNO='{self.OrderNo}' and OO.Product_id=P.Product_ID;"
+        self.cursor.execute(select_order_outline_sql_command)
+        order_product_list=[]
+        records=self.cursor.fetchall()
+        for r in records:
+            order_product_list.append(list(r))
+       
+        # msg_box.setInformativeText(f'Established Date:\t{str(order_list[0][0])}\nState:\t\t\t\t{order_list[0][1]}\nPayment Method:\t{order_list[0][2]}\n')
+        total_money=0
+        for i in range(len(order_product_list)):
+            total_money+=(order_product_list[i][2]*order_product_list[i][3])
+
+        if(len(order_product_list)==1):
+            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n\n\n總金額:{total_money}\n')
+        else:
+            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n{order_product_list[1][0]},{order_product_list[1][1]},{order_product_list[1][2]},{order_product_list[1][3]}\n\n\n總金額:{total_money}\n')
+         
+
+            
+        # msg_box.setDetailedText(
+        #     'Follow our Bucketing page, and learn more'
+        #     'about PySide2, Java, Design pattern!\n'
+        #     'Enjoy!')
+        # msg_box.setStyleSheet("min-width:1000 px;min-height:100 px; font-size: 24px; font-size:30px; background-color: rgb(0,0,0);color: rgb(255,255,255);")
+        msg_box.setStyleSheet("QLabel{min-width:1000 px;min-height:100 px; font-size: 24px; font-size:30px; background-color: rgb(0,0,0);color: rgb(255,255,255);} QPushButton{ width:250px; font-size: 18px;background-color: Silver;}")
+        msg_box.addButton('OK',QMessageBox.AcceptRole)
+        msg_box.show()
