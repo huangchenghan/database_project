@@ -73,8 +73,6 @@ class MainWindow():
         
         self.ui.add_pushButton.clicked.connect(self.add_click)
         
-        self.ui.change_pushButton.clicked.connect(self.change_click)
-        
         self.ui.cart_tableWidget.cellClicked.connect(self.cart_tablewidget_click)
         
         self.ui.order_tableWidget.cellClicked.connect(self.order_tablewidget_click)
@@ -187,16 +185,6 @@ class MainWindow():
         self.cursor.execute(sql)
         self.conn.commit()
         self.list_cart_result()
-    
-    def change_click(self):
-        if self.cart_order == 0:
-            self.ui.cart_order_label.setText("Order")
-            self.cart_order = 1
-            self.list_order_result()
-        elif self.cart_order == 1:
-            self.ui.cart_order_label.setText("Cart")
-            self.cart_order = 0
-            self.list_cart_result()
             
     def get_cart(self):
         self.useraccount = self.ui.user_comboBox.currentText()
@@ -268,10 +256,10 @@ class MainWindow():
         self.row_index_cart = self.ui.cart_tableWidget.currentRow()
         self.column_index_cart = self.ui.cart_tableWidget.currentColumn()
         self.ui.delete_label.setText(self.cart_list[self.row_index_cart][1])
-    def order_tablewidget_click(self):
-        self.row_index_order = self.ui.order_tableWidget.currentRow()
-        self.column_index_order = self.ui.order_tableWidget.currentColumn()
-        self.ui.delete_label.setText(self.order_list[self.row_index_order][0])    
+    # def order_tablewidget_click(self):
+    #     self.row_index_order = self.ui.order_tableWidget.currentRow()
+    #     self.column_index_order = self.ui.order_tableWidget.currentColumn()
+    #     self.ui.delete_label.setText(self.order_list[self.row_index_order][0])    
 
         
     def delete_click(self):
