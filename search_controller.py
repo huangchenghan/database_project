@@ -34,9 +34,9 @@ class MainWindow():
         
         self.payment_list = ["信用卡", "匯款", "貨到付款"]
         
-        # self.user_list = ["charles", "shang", "wx200010"]
+        self.user_list = ["charles", "shang", "wx200010"]
         # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        self.user_list = ["F74084737","F74086250"]
+        
         self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
         self.cart_order = 0
@@ -49,12 +49,13 @@ class MainWindow():
 
 
     def replenishment(self):
-        replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A01'"
-        self.cursor.execute(replenishment_sql_command)
-        self.conn.commit()
-        replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = 'A02'"
-        self.cursor.execute(replenishment_sql_command)
-        self.conn.commit()
+        productID=['A01','G01','G02','G03','G04','K01']
+        for i in range(len(productID)):
+            replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = '{productID[i]}'"
+            self.cursor.execute(replenishment_sql_command)
+            self.conn.commit()          
+
+
 
 
     def connect_ui(self):
@@ -149,6 +150,7 @@ class MainWindow():
         records=self.cursor.fetchall()
         for r in records:
             birthday_list.append(list(r))
+        print(birthday_list)
         birthday=str(birthday_list[0])
         birthday=birthday.split(",")
         print(self.useraccount)
@@ -340,7 +342,7 @@ class MainWindow():
             Established_date=str(datetime.date.today())
             completion_date=str(datetime.date.today())
             State="訂單準備中"
-            PaymentMethod="信用卡"
+            PaymentMethod=self.ui.payment_comboBox.currentText()
             IsPaid="0"
             insert_command='INSERT INTO '+ 'ORDER_INFO'+' VALUES'+f"('{self.OrderNo}','{self.useraccount}','{Address}','{Established_date}','{completion_date}','{State}','{PaymentMethod}','{IsPaid}');"
             self.cursor.execute(insert_command)
@@ -407,11 +409,12 @@ class MainWindow():
         if(self.is_birthday==1):
             total_money=round(total_money*0.9)
             postfix_happybirthday_string="Happy Birthday!You have a 10% off discount!\n"
+        message=""
+        for i in range(len(order_product_list)):
+            message+=f"{order_product_list[i][0]},{order_product_list[i][1]},{order_product_list[i][2]},{order_product_list[i][3]}\n"
+        message+=f"\n\n\n{postfix_happybirthday_string}總金額:{total_money}\n"
+        msg_box.setInformativeText(message)
 
-        if(len(order_product_list)==1):
-            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n\n\n{postfix_happybirthday_string}總金額:{total_money}\n')
-        else:
-            msg_box.setInformativeText(f'{order_product_list[0][0]},{order_product_list[0][1]},{order_product_list[0][2]},{order_product_list[0][3]}\n{order_product_list[1][0]},{order_product_list[1][1]},{order_product_list[1][2]},{order_product_list[1][3]}\n\n\n{postfix_happybirthday_string}總金額:{total_money}\n')
                  
         # msg_box.setDetailedText(
         #     'Follow our Bucketing page, and learn more'
