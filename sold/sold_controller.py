@@ -13,8 +13,8 @@ class MainWindow():
     def __init__(self, ui):
         self.ui = ui    
         self.i=81
-        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
         self.cursor = self.conn.cursor()
 
         self.connect_ui()
@@ -26,7 +26,7 @@ class MainWindow():
         sql = "SELECT Product_ID FROM PRODUCT WHERE Product_ID LIKE \'Z%\'"
         self.cursor.execute(sql)
         num = self.cursor.fetchall()
-        print(num[0])
+        self.Product_ID="Z0"
         for i in range(len(num)):
             if('Z' + str(i) != num[i][0]):
                 self.Product_ID = 'Z' + str(i)

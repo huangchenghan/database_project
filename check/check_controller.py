@@ -12,8 +12,8 @@ class MainWindow():
     def __init__(self, ui):
         self.ui = ui    
         
-        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        #self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
         self.cursor = self.conn.cursor()
 
@@ -23,7 +23,7 @@ class MainWindow():
     def search_click(self):
         
         self.product_list = []
-        sql = f"SELECT * FROM PRODUCT WHERE Price = -1"
+        sql = f"SELECT Product_ID,Product_name,State FROM PRODUCT WHERE Price = -1"
         
         #print(sql)
         self.cursor.execute(sql)
@@ -34,7 +34,6 @@ class MainWindow():
             self.product_list.append(list(products[i]))
             for j in range(len(self.product_list[i])):
                 self.product_list[i][j] = str(self.product_list[i][j])
-            del self.product_list[i][7:9]
         #print(self.product_list)
         #print(self.useraccount)
         self.conn.commit()
