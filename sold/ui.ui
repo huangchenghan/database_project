@@ -52,6 +52,9 @@ padding: 2 2px 2 2px;</string>
          <height>30</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="name_lineEdit">
        <property name="geometry">
@@ -62,6 +65,9 @@ padding: 2 2px 2 2px;</string>
          <height>30</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="contact_lineEdit">
        <property name="geometry">
@@ -71,6 +77,9 @@ padding: 2 2px 2 2px;</string>
          <width>113</width>
          <height>30</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
       </widget>
       <widget class="QLabel" name="label">

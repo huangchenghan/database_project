@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'soldLaZzAe.ui'
+## Form generated from reading UI file 'uiyyjCbh.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -39,12 +39,15 @@ class Ui_MainWindow(object):
         self.brand_lineEdit = QLineEdit(self.widget)
         self.brand_lineEdit.setObjectName(u"brand_lineEdit")
         self.brand_lineEdit.setGeometry(QRect(100, 150, 113, 30))
+        self.brand_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.name_lineEdit = QLineEdit(self.widget)
         self.name_lineEdit.setObjectName(u"name_lineEdit")
         self.name_lineEdit.setGeometry(QRect(300, 150, 113, 30))
+        self.name_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.contact_lineEdit = QLineEdit(self.widget)
         self.contact_lineEdit.setObjectName(u"contact_lineEdit")
         self.contact_lineEdit.setGeometry(QRect(500, 150, 113, 30))
+        self.contact_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.label = QLabel(self.widget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(100, 120, 100, 30))
