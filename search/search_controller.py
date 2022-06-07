@@ -50,8 +50,9 @@ class MainWindow():
 
     def replenishment(self):
         productID=['A01','G01','G02','G03','G04','K01']
+        stock = [5,7,10,5,3,2]
         for i in range(len(productID)):
-            replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = 10 WHERE Product_ID = '{productID[i]}'"
+            replenishment_sql_command=f"UPDATE PRODUCT SET STOCK = {stock[i]} WHERE Product_ID = '{productID[i]}'"
             self.cursor.execute(replenishment_sql_command)
             self.conn.commit()          
 
@@ -157,10 +158,10 @@ class MainWindow():
         records=self.cursor.fetchall()
         for r in records:
             birthday_list.append(list(r))
-        print(birthday_list)
+        # print(birthday_list)
         birthday=str(birthday_list[0])
         birthday=birthday.split(",")
-        print(self.useraccount)
+        # print(self.useraccount)
         if int(birthday[1])==int(loc_dt_format[1]):
             self.is_birthday=1
             for i in range(len(self.product_list)):
@@ -331,7 +332,7 @@ class MainWindow():
             # 若有任一商品超過庫存，則報錯，拒絕訂單成立
             if(Amount > STOCK):
                 Exceed_Stock = True
-                print(f"編號{Product_id}的商品已超過庫存{STOCK}")
+                # print(f"編號{Product_id}的商品已超過庫存{STOCK}")
                 break
         # 若商品數量皆不超過庫存，則代表該訂單可以成立：
         if(Exceed_Stock == False):

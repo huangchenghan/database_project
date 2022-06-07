@@ -1,4 +1,5 @@
 from errno import ESTALE
+from re import L
 from winsound import PlaySound
 from PySide2 import QtGui, QtCore, QtWidgets
 from PySide2.QtWidgets import  QMessageBox
@@ -18,7 +19,11 @@ class MainWindow():
         for i in range(len(classes)):
             self.ui.class_comboBox.addItem(classes[i])
         self.cursor = self.conn.cursor()
-
+        sql = "SELECT Name FROM EMPLOYEE"
+        self.cursor.execute(sql)
+        names = self.cursor.fetchall()
+        for i in range(len(names)):
+            self.ui.employee_comboBox.addItem(names[i][0])
         self.connect_ui()      
         self.search_click()
 
@@ -95,6 +100,7 @@ class MainWindow():
         self.price = self.ui.price_lineEdit.text()
         self.state = self.ui.state_lineEdit.text()
         self.classes = self.ui.class_comboBox.currentText()
+        self.state = self.state + " checked by " +self.ui.employee_comboBox.currentText()
         #print(self.product,self.price,self.state)
         
         update_sql=f"update PRODUCT set Price = {self.price},state='{self.state}',Class ='{self.classes}' where Product_ID ='{self.product}'"
