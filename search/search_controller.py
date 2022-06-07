@@ -131,13 +131,20 @@ class MainWindow():
         #print(sql)
         self.cursor.execute(sql)
         products = self.cursor.fetchall()
+        index = 0
         for i in range(len(products)):
             # self.product_list.append(list(products[i]))
             #print(list(products[i]))
+            
+            # ****把待審核的資料篩選掉****
+            if(products[i][4] == -1):
+                continue
+
             self.product_list.append(list(products[i]))
-            for j in range(len(self.product_list[i])):
-                self.product_list[i][j] = str(self.product_list[i][j])
-            del self.product_list[i][7:9]
+            for j in range(len(self.product_list[index])):
+                self.product_list[index][j] = str(self.product_list[index][j])
+            del self.product_list[index][7:9]
+            index += 1
         #print(self.product_list)
         #print(self.useraccount)
         self.conn.commit()
@@ -278,7 +285,7 @@ class MainWindow():
         self.ui.order_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
         
         self.ui.order_tableWidget.setHorizontalHeaderLabels(self.order_attribute)
-        self.ui.order_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        self.ui.order_tableWidget.setVerticalHeaderLabels([x for x in range(len(self.order_list))])
         
         for index in range(self.ui.order_tableWidget.columnCount()):
             headitem=self.ui.order_tableWidget.horizontalHeaderItem(index)

@@ -18,8 +18,48 @@ class MainWindow():
         self.cursor = self.conn.cursor()
 
         self.connect_ui()      
-        self.list_search_result()
+        self.search_click()
 
+    def search_click(self):
+        
+        self.product_list = []
+        sql = f"SELECT * FROM PRODUCT WHERE Price = -1"
+        
+        #print(sql)
+        self.cursor.execute(sql)
+        products = self.cursor.fetchall()
+        for i in range(len(products)):
+            # self.product_list.append(list(products[i]))
+            #print(list(products[i]))
+            self.product_list.append(list(products[i]))
+            for j in range(len(self.product_list[i])):
+                self.product_list[i][j] = str(self.product_list[i][j])
+            del self.product_list[i][7:9]
+        #print(self.product_list)
+        #print(self.useraccount)
+        self.conn.commit()
+        # loc_dt = datetime.datetime.today() 
+        # loc_dt_format = loc_dt.strftime("%Y/%m/%d %H:%M:%S")
+        # loc_dt_format=loc_dt_format.split("/")
+        # select_birthday_sql_command=f"select Birthday from CUSTOMER WHERE Customer_account='{self.useraccount}'"
+        # self.cursor.execute(select_birthday_sql_command)
+        # birthday_list=[]
+        # records=self.cursor.fetchall()
+        # for r in records:
+        #     birthday_list.append(list(r))
+        # print(birthday_list)
+        # birthday=str(birthday_list[0])
+        # birthday=birthday.split(",")
+        # print(self.useraccount)
+        # if int(birthday[1])==int(loc_dt_format[1]):
+        #     self.is_birthday=1
+        #     for i in range(len(self.product_list)):
+        #         self.product_list[i][4]=str(round(int(self.product_list[i][4])*0.9))
+        # else:
+        #     self.is_birthday=0
+        # #print(self.product_list)
+    
+        self.list_search_result()
     def connect_ui(self):        
         self.ui.accept_pushButton.clicked.connect(self.accept_click)   
         self.ui.reject_pushButton.clicked.connect(self.reject_click) 
@@ -27,25 +67,25 @@ class MainWindow():
         self.ui.search_tableWidget.cellClicked.connect(self.search_tableWidget_click)
            
     def list_search_result(self):
-        self.ui.search_tableWidget.setRowCount(5)
+        self.ui.search_tableWidget.setRowCount(len(self.product_list))
         self.ui.search_tableWidget.setColumnCount(3)
         
         self.ui.search_tableWidget.setStyleSheet(u"color: rgb(255, 255, 255);\n" "background-color: rgb(60, 60, 60);")
         self.ui.search_tableWidget.horizontalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
         self.ui.search_tableWidget.verticalHeader().setStyleSheet('QHeaderView::section{color:rgb(255, 255, 255); background:rgb(60, 60, 60);}')
         
-        self.ui.search_tableWidget.setHorizontalHeaderLabels(["test1", "test2", "test3"])
-        self.ui.search_tableWidget.setVerticalHeaderLabels(["1", "2", "3", "4", "5"])
+        self.ui.search_tableWidget.setHorizontalHeaderLabels(["Product_ID", "Product_name", "Contact_info"])
+        self.ui.search_tableWidget.setVerticalHeaderLabels([x for x in range(len(self.product_list))])
         
-        # for i, product in enumerate(self.product_list):
-        #     for j, attribute in enumerate(product):                
-        #         self.ui.search_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
+        for i, product in enumerate(self.product_list):
+            for j, attribute in enumerate(product):                
+                self.ui.search_tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(attribute))
            
            
     def search_tableWidget_click(self):
         self.row_index = self.ui.search_tableWidget.currentRow()
         self.column_index = self.ui.search_tableWidget.currentColumn()
-
+        self.ui.product_label.setText(self.product_list[self.row_index][0])
         #self.ui.product_label.setText()  
         
         
@@ -53,12 +93,17 @@ class MainWindow():
         self.product = self.ui.product_label.text()
         self.price = self.ui.price_lineEdit.text()
         self.state = self.ui.state_lineEdit.text()
-        
-        self.list_search_result()
+        #print(self.product,self.price,self.state)
+        update_sql=f"update PRODUCT set Price = {self.price},state='{self.state}' where Product_ID ='{self.product}'"
+        self.cursor.execute(update_sql)
+        self.conn.commit()
+        self.search_click()
         
         
     def reject_click(self):
         self.product = self.ui.product_label.text()
-        
-        self.list_search_result()
+        delete_sql=f"delete from PRODUCT where Product_ID='{self.product}'"
+        self.cursor.execute(delete_sql)
+        self.conn.commit()
+        self.search_click()
         
