@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiRvXNQr.ui'
+## Form generated from reading UI file 'uioKrVGj.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -77,6 +77,7 @@ class Ui_MainWindow(object):
         self.state_lineEdit = QLineEdit(self.widget)
         self.state_lineEdit.setObjectName(u"state_lineEdit")
         self.state_lineEdit.setGeometry(QRect(310, 400, 120, 30))
+        self.state_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.label = QLabel(self.widget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(180, 370, 120, 30))

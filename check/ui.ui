@@ -156,6 +156,9 @@ padding: 2 2px 2 2px;</string>
          <height>30</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLabel" name="label">
        <property name="geometry">
