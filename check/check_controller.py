@@ -12,8 +12,8 @@ class MainWindow():
     def __init__(self, ui):
         self.ui = ui    
         
-        # self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
 
         self.cursor = self.conn.cursor()
 
@@ -94,9 +94,13 @@ class MainWindow():
         self.price = self.ui.price_lineEdit.text()
         self.state = self.ui.state_lineEdit.text()
         #print(self.product,self.price,self.state)
+        
         update_sql=f"update PRODUCT set Price = {self.price},state='{self.state}' where Product_ID ='{self.product}'"
         self.cursor.execute(update_sql)
         self.conn.commit()
+        self.ui.price_lineEdit.setText("")
+        self.ui.product_label.setText("")
+        self.ui.state_lineEdit.setText("")
         self.search_click()
         
         
@@ -105,5 +109,8 @@ class MainWindow():
         delete_sql=f"delete from PRODUCT where Product_ID='{self.product}'"
         self.cursor.execute(delete_sql)
         self.conn.commit()
+        self.ui.price_lineEdit.setText("")
+        self.ui.product_label.setText("")
+        self.ui.state_lineEdit.setText("")
         self.search_click()
         
