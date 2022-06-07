@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uioKrVGj.ui'
+## Form generated from reading UI file 'uiaVhYaZ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
 "font: 12pt \"Rockwell\"; ")
         self.product_label = QLabel(self.widget)
         self.product_label.setObjectName(u"product_label")
-        self.product_label.setGeometry(QRect(10, 400, 150, 30))
+        self.product_label.setGeometry(QRect(10, 400, 120, 30))
         self.product_label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
@@ -72,24 +72,30 @@ class Ui_MainWindow(object):
 "padding: 2 2px 2 2px;")
         self.price_lineEdit = QLineEdit(self.widget)
         self.price_lineEdit.setObjectName(u"price_lineEdit")
-        self.price_lineEdit.setGeometry(QRect(180, 400, 120, 30))
+        self.price_lineEdit.setGeometry(QRect(150, 400, 90, 30))
         self.price_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.state_lineEdit = QLineEdit(self.widget)
         self.state_lineEdit.setObjectName(u"state_lineEdit")
-        self.state_lineEdit.setGeometry(QRect(310, 400, 120, 30))
+        self.state_lineEdit.setGeometry(QRect(250, 400, 90, 30))
         self.state_lineEdit.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.label = QLabel(self.widget)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(180, 370, 120, 30))
+        self.label.setGeometry(QRect(150, 370, 120, 30))
         self.label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 0, 0);\n"
 "font: 12pt \"Rockwell\"; ")
         self.label_2 = QLabel(self.widget)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(310, 370, 58, 30))
+        self.label_2.setGeometry(QRect(250, 370, 58, 30))
         self.label_2.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 0, 0);\n"
 "font: 12pt \"Rockwell\"; ")
+        self.class_comboBox = QComboBox(self.widget)
+        self.class_comboBox.setObjectName(u"class_comboBox")
+        self.class_comboBox.setGeometry(QRect(350, 400, 100, 30))
+        self.class_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(60, 60, 60);\n"
+"font: 10pt \"Rockwell\"; ")
 
         self.horizontalLayout.addWidget(self.widget)
 
