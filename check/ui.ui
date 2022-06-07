@@ -211,7 +211,7 @@ background-color: rgb(60, 60, 60);
 font: 10pt &quot;Rockwell&quot;; </string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="employee_comboBox">
        <property name="geometry">
         <rect>
          <x>360</x>

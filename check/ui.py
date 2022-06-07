@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uiePTOPm.ui'
+## Form generated from reading UI file 'uicQOOqv.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -96,10 +96,10 @@ class Ui_MainWindow(object):
         self.class_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
-        self.comboBox = QComboBox(self.widget)
-        self.comboBox.setObjectName(u"comboBox")
-        self.comboBox.setGeometry(QRect(360, 20, 120, 30))
-        self.comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+        self.employee_comboBox = QComboBox(self.widget)
+        self.employee_comboBox.setObjectName(u"employee_comboBox")
+        self.employee_comboBox.setGeometry(QRect(360, 20, 120, 30))
+        self.employee_comboBox.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(60, 60, 60);\n"
 "font: 10pt \"Rockwell\"; ")
         self.label_3 = QLabel(self.widget)
