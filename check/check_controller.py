@@ -12,9 +12,11 @@ class MainWindow():
     def __init__(self, ui):
         self.ui = ui    
         
-        #self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
-        self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
-
+        self.conn = mysql.connector.connect(host = "localhost", user='root', password = 'ddcharles', database = 'HILIGHT_MUSICAL')
+        # self.conn = mysql.connector.connect(host = "localhost",port='3306', user='root', password = 'F74086250', database = 'HIGHLIGHT_musical_instrument_shop')
+        classes = ["電吉他","木吉他","貝斯","MIDI鍵盤","其他"]
+        for i in range(len(classes)):
+            self.ui.class_comboBox.addItem(classes[i])
         self.cursor = self.conn.cursor()
 
         self.connect_ui()      
@@ -92,9 +94,10 @@ class MainWindow():
         self.product = self.ui.product_label.text()
         self.price = self.ui.price_lineEdit.text()
         self.state = self.ui.state_lineEdit.text()
+        self.classes = self.ui.class_comboBox.currentText()
         #print(self.product,self.price,self.state)
         
-        update_sql=f"update PRODUCT set Price = {self.price},state='{self.state}' where Product_ID ='{self.product}'"
+        update_sql=f"update PRODUCT set Price = {self.price},state='{self.state}',Class ='{self.classes}' where Product_ID ='{self.product}'"
         self.cursor.execute(update_sql)
         self.conn.commit()
         self.ui.price_lineEdit.setText("")
