@@ -157,6 +157,42 @@ padding: 2 2px 2 2px;</string>
         </rect>
        </property>
       </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>370</y>
+         <width>120</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);
+font: 12pt &quot;Rockwell&quot;; </string>
+       </property>
+       <property name="text">
+        <string>Price :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>370</y>
+         <width>58</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);
+font: 12pt &quot;Rockwell&quot;; </string>
+       </property>
+       <property name="text">
+        <string>State :</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>

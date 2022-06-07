@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'uivPsfJq.ui'
+## Form generated from reading UI file 'uiRvXNQr.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -77,6 +77,18 @@ class Ui_MainWindow(object):
         self.state_lineEdit = QLineEdit(self.widget)
         self.state_lineEdit.setObjectName(u"state_lineEdit")
         self.state_lineEdit.setGeometry(QRect(310, 400, 120, 30))
+        self.label = QLabel(self.widget)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(180, 370, 120, 30))
+        self.label.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(0, 0, 0);\n"
+"font: 12pt \"Rockwell\"; ")
+        self.label_2 = QLabel(self.widget)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(310, 370, 58, 30))
+        self.label_2.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"background-color: rgb(0, 0, 0);\n"
+"font: 12pt \"Rockwell\"; ")
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -94,5 +106,7 @@ class Ui_MainWindow(object):
         self.product_label.setText("")
         self.accept_pushButton.setText(QCoreApplication.translate("MainWindow", u"Accept", None))
         self.reject_pushButton.setText(QCoreApplication.translate("MainWindow", u"Reject", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Price :", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"State :", None))
     # retranslateUi
 
